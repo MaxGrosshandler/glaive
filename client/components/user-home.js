@@ -35,6 +35,10 @@ class UserHome extends Component {
     console.log(this.state.files)
   }
   render() {
+    let snake = window.location.host
+    if (snake === 'localhost:8080') {
+      snake = 'http://localhost:8080'
+    }
     return (
       <div>
         <h3>Welcome, {this.state.email}</h3>
@@ -42,7 +46,7 @@ class UserHome extends Component {
         things
         <br />
         <FilePond
-          server="http://localhost:8080"
+          server={snake}
           allowMultiple={true}
           maxFiles={3}
           onupdatefiles={fileItems => {
