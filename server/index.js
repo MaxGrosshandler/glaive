@@ -80,7 +80,9 @@ const createApp = () => {
       next()
     }
   })
-
+  app.post('/', async (req, res, next) => {
+    res.json('this posted')
+  })
   // sends index.html
   app.use('*', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'public/index.html'))

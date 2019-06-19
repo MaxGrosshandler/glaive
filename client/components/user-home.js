@@ -1,34 +1,61 @@
-import React from 'react'
+import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {FilePond, registerPlugin} from 'react-filepond'
 
 // Import FilePond styles
-
-import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation'
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
-import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
 
 // Register the plugins
-registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview)
+registerPlugin(FilePondPluginImagePreview)
 
 /**
  * COMPONENT
  */
-export const UserHome = props => {
-  const {email} = props
+class UserHome extends Component {
+  constructor(props) {
+    super(props)
 
-  return (
-    <div>
-      <h3>Welcome, {email}</h3>
-      This is your Glaive Dashboard, where you can access your Glaive-related
-      things
-      <br />
-      <FilePond />
-    </div>
-  )
+    this.state = {
+      // Set initial files, type 'local' means this is a file
+      // that has already been uploaded to the server (see docs)
+      files: [
+        {
+          source: 'index.html',
+          options: {
+            type: 'local'
+          }
+        }
+      ],
+      email: props.email
+    }
+    this.showState = this.showState.bind(this)
+  }
+  showState() {
+    console.log(this.state.files)
+  }
+  render() {
+    return (
+      <div>
+        <h3>Welcome, {this.state.email}</h3>
+        This is your Glaive Dashboard, where you can access your Glaive-related
+        things
+        <br />
+        <FilePond
+          server="http://localhost:8080"
+          allowMultiple={true}
+          maxFiles={3}
+          onupdatefiles={fileItems => {
+            console.log(fileItems)
+            this.setState({files: fileItems.map(fileItem => fileItem.file)})
+          }}
+        />
+        <br />
+        <button onClick={this.showState}>Click me to see state!</button>
+      </div>
+    )
+  }
 }
-
 /**
  * CONTAINER
  */
