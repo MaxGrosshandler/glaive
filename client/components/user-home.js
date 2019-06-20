@@ -1,18 +1,9 @@
 import React, {Component} from 'react'
-import PropTypes from 'prop-types'
-import {connect} from 'react-redux'
-// import {FilePond, registerPlugin} from 'react-filepond'
 
-// Import FilePond styles
-// import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
-import ImageUploader from 'react-images-upload'
+import Image from 'react-image-resizer'
+
 import Files from 'react-butterfiles'
-// Register the plugins
-// registerPlugin(FilePondPluginImagePreview)
 
-/**
- * COMPONENT
- */
 class UserHome extends Component {
   constructor(props) {
     super(props)
@@ -22,20 +13,22 @@ class UserHome extends Component {
     this.state = {
       files: [],
       errors: [],
-      uploaded: false
+      uploaded: false,
+      cropped: false
     }
-    // this.onDrop = this.onDrop.bind(this)
 
     this.showState = this.showState.bind(this)
+    this.changeImage = this.changeImage.bind(this)
   }
   showState() {
     console.log(this.state.files[0].src)
   }
-  // onDrop(picture) {
-  //   this.setState({
-  //     pictures: this.state.pictures.concat(picture)
-  //   })
-  // }
+  changeImage() {
+    this.setState({
+      cropped: true
+    })
+  }
+
   render() {
     return (
       <div>
@@ -46,7 +39,7 @@ class UserHome extends Component {
         <Files
           multiple={false}
           convertToBase64
-          accept={['application/pdf', 'image/jpg', 'image/jpeg']}
+          accept={['image/png', 'image/jpg', 'image/jpeg']}
           onSuccess={files => this.setState({files, uploaded: true})}
           onError={errors => this.setState({errors})}
         >
@@ -71,9 +64,7 @@ class UserHome extends Component {
             </>
           )}
         </Files>
-        <button onClick={this.showState} type="button">
-          Click me!
-        </button>
+        Preview:
         {this.state.uploaded ? (
           <div>
             <img src={this.state.files[0].src.base64} />
@@ -81,6 +72,24 @@ class UserHome extends Component {
         ) : (
           <div />
         )}
+        Done:
+        {this.state.cropped ? (
+          <div>
+            <Image
+              src={this.state.files[0].src.base64}
+              height={200}
+              width={200}
+            />
+          </div>
+        ) : (
+          <div />
+        )}
+        <button onClick={this.changeImage} type="button">
+          Click to crop the image
+        </button>
+        <button onClick={this.showState} type="button">
+          Click to show the state
+        </button>
       </div>
     )
   }
