@@ -3,7 +3,7 @@ import React, {Component} from 'react'
 import Image from 'react-image-resizer'
 
 import Files from 'react-butterfiles'
-
+import Button from '@material-ui/core/Button'
 class UserHome extends Component {
   constructor(props) {
     super(props)
@@ -37,9 +37,13 @@ class UserHome extends Component {
         things
         <br />
         {this.state.uploaded && (
-          <button onClick={this.changeImage} type="button">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={this.changeImage}
+          >
             Click to crop the image
-          </button>
+          </Button>
         )}
         <Files
           multiple={false}
@@ -52,9 +56,9 @@ class UserHome extends Component {
             <>
               <br />
               <div {...getDropZoneProps({className: 'myDropZone'})} />
-              <button type="button" onClick={browseFiles}>
-                Select files...
-              </button>
+              <Button variant="contained" color="primary" onClick={browseFiles}>
+                Browse files...
+              </Button>
               <ol>
                 {this.state.files.map(file => (
                   <li key={file.name}>{file.name}</li>
