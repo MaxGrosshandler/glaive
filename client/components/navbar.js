@@ -3,10 +3,13 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
-
+import Typography from '@material-ui/core/Typography'
 const Navbar = ({handleClick, isLoggedIn}) => (
   <div>
-    <h1>Glaive</h1>
+    <Typography variant="h2" align="center" gutterBottom>
+      {' '}
+      Glaive{' '}
+    </Typography>
     <nav>
       <div>{/* The navbar will show these links after you log in */}</div>
     </nav>
