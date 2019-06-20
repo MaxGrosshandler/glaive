@@ -6,7 +6,7 @@ import {logout} from '../store'
 import Typography from '@material-ui/core/Typography'
 const Navbar = ({handleClick, isLoggedIn}) => (
   <div>
-    <Typography variant="h2" align="center" gutterBottom>
+    <Typography variant="h2" align="left" gutterBottom>
       {' '}
       Glaive{' '}
     </Typography>

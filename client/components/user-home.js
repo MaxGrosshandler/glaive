@@ -31,7 +31,7 @@ class UserHome extends Component {
 
   render() {
     return (
-      <div className="snakes">
+      <div>
         <h3>Dashboard</h3>
         This is your Glaive Dashboard, where you can access your Glaive-related
         things
