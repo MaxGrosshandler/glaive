@@ -1,13 +1,14 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {FilePond, registerPlugin} from 'react-filepond'
+// import {FilePond, registerPlugin} from 'react-filepond'
 
 // Import FilePond styles
-import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
-
+// import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
+import ImageUploader from 'react-images-upload'
+import Files from 'react-butterfiles'
 // Register the plugins
-registerPlugin(FilePondPluginImagePreview)
+// registerPlugin(FilePondPluginImagePreview)
 
 /**
  * COMPONENT
@@ -16,68 +17,72 @@ class UserHome extends Component {
   constructor(props) {
     super(props)
 
+    // Set initial files, type 'local' means this is a file
+    // that has already been uploaded to the server (see docs)
     this.state = {
-      // Set initial files, type 'local' means this is a file
-      // that has already been uploaded to the server (see docs)
-      files: [
-        {
-          source: 'index.html',
-          options: {
-            type: 'local'
-          }
-        }
-      ],
-      email: props.email
+      files: [],
+      errors: [],
+      uploaded: false
     }
+    // this.onDrop = this.onDrop.bind(this)
+
     this.showState = this.showState.bind(this)
   }
   showState() {
-    console.log(this.state.files)
+    console.log(this.state.files[0].src)
   }
+  // onDrop(picture) {
+  //   this.setState({
+  //     pictures: this.state.pictures.concat(picture)
+  //   })
+  // }
   render() {
-    let snake = window.location.host
-
-    if (snake === 'localhost:8080') {
-      snake = 'http://localhost:8080'
-    } else {
-      snake = 'https://' + window.location.host
-    }
-    console.log(snake)
     return (
       <div>
-        <h3>Welcome, {this.state.email}</h3>
+        <h3>Dashboard</h3>
         This is your Glaive Dashboard, where you can access your Glaive-related
         things
         <br />
-        <FilePond
-          server={snake}
-          allowMultiple={true}
-          maxFiles={3}
-          onupdatefiles={fileItems => {
-            console.log(fileItems)
-            this.setState({files: fileItems.map(fileItem => fileItem.file)})
-          }}
-        />
-        <br />
-        <button onClick={this.showState}>Click me to see state!</button>
+        <Files
+          multiple={false}
+          convertToBase64
+          accept={['application/pdf', 'image/jpg', 'image/jpeg']}
+          onSuccess={files => this.setState({files, uploaded: true})}
+          onError={errors => this.setState({errors})}
+        >
+          {({browseFiles, getDropZoneProps, getLabelProps}) => (
+            <>
+              <label {...getLabelProps()}>Your files</label>
+              <br />
+              <div {...getDropZoneProps({className: 'myDropZone'})} />
+              <button type="button" onClick={browseFiles}>
+                Select files...
+              </button>
+              <ol>
+                {this.state.files.map(file => (
+                  <li key={file.name}>{file.name}</li>
+                ))}
+                {this.state.errors.map(error => (
+                  <li key={error.file.name}>
+                    {error.file.name} - {error.type}
+                  </li>
+                ))}
+              </ol>
+            </>
+          )}
+        </Files>
+        <button onClick={this.showState} type="button">
+          Click me!
+        </button>
+        {this.state.uploaded ? (
+          <div>
+            <img src={this.state.files[0].src.base64} />
+          </div>
+        ) : (
+          <div />
+        )}
       </div>
     )
   }
 }
-/**
- * CONTAINER
- */
-const mapState = state => {
-  return {
-    email: state.user.email
-  }
-}
-
-export default connect(mapState)(UserHome)
-
-/**
- * PROP TYPES
- */
-UserHome.propTypes = {
-  email: PropTypes.string
-}
+export default UserHome
