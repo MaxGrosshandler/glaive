@@ -16,7 +16,8 @@ class UserHome extends Component {
       errors: [],
       uploaded: false,
       cropped: false,
-      addText: false
+      addText: false,
+      manipulated: false
     }
 
     this.showState = this.showState.bind(this)
@@ -29,12 +30,14 @@ class UserHome extends Component {
   }
   changeImage() {
     this.setState({
-      cropped: true
+      cropped: true,
+      manipulated: true
     })
   }
   addText() {
     this.setState({
-      addText: true
+      addText: true,
+      manipulated: true
     })
   }
   resetState() {
@@ -43,7 +46,8 @@ class UserHome extends Component {
       errors: [],
       uploaded: false,
       cropped: false,
-      addText: false
+      addText: false,
+      manipulated: false
     })
   }
 
@@ -56,24 +60,34 @@ class UserHome extends Component {
         <br />
         {this.state.uploaded && (
           <div>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={this.changeImage}
-            >
-              Click to generate images!
-            </Button>
+            {!this.state.manipulated && (
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={this.changeImage}
+              >
+                Click to generate images!
+              </Button>
+            )}
+
             <br />
-            <Button variant="contained" color="primary" onClick={this.addText}>
-              Add text to this image!
-            </Button>
+            {!this.state.manipulated && (
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={this.addText}
+              >
+                Add text to this image!
+              </Button>
+            )}
+
             <br />
             <Button
               variant="contained"
               color="primary"
               onClick={this.resetState}
             >
-              Reset the page
+              Choose a new file
             </Button>
             {this.state.addText && <MainPage photos={this.state.files} />}
           </div>
@@ -89,9 +103,16 @@ class UserHome extends Component {
             <>
               <br />
               <div {...getDropZoneProps({className: 'myDropZone'})} />
-              <Button variant="contained" color="primary" onClick={browseFiles}>
-                Browse files...
-              </Button>
+              {!this.state.uploaded && (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={browseFiles}
+                >
+                  Browse files...
+                </Button>
+              )}
+
               <ol>
                 {this.state.files.map(file => (
                   <li key={file.name}>{file.name}</li>
