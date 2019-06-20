@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 
 import Image from 'react-image-resizer'
+import ProcessImage from 'react-imgpro'
 
 import Files from 'react-butterfiles'
 import Button from '@material-ui/core/Button'
@@ -33,8 +34,8 @@ class UserHome extends Component {
     return (
       <div>
         <h3>Dashboard</h3>
-        This is your Glaive Dashboard, where you can access your Glaive-related
-        things
+        This is your Glaive Dashboard, where you can generate banners and
+        widget-sized images!
         <br />
         {this.state.uploaded && (
           <Button
@@ -42,7 +43,7 @@ class UserHome extends Component {
             color="primary"
             onClick={this.changeImage}
           >
-            Click to crop the image
+            Click to generate images!
           </Button>
         )}
         <Files
@@ -78,13 +79,20 @@ class UserHome extends Component {
             <br />
             <img src={this.state.files[0].src.base64} />
             <br />
-            Done:
             {this.state.cropped && (
               <div>
-                <Image
-                  src={this.state.files[0].src.base64}
-                  height={200}
-                  width={200}
+                Widget-sized:
+                <br />
+                <ProcessImage
+                  image={this.state.files[0].src.base64}
+                  resize={{width: 320, height: 120}}
+                />
+                <br />
+                Banner-sized:
+                <br />
+                <ProcessImage
+                  image={this.state.files[0].src.base64}
+                  resize={{width: 800, height: 500}}
                 />
               </div>
             )}
