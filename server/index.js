@@ -81,7 +81,8 @@ const createApp = () => {
     }
   })
   app.post('/', async (req, res, next) => {
-    res.json('this posted')
+    console.log('yes, this worked')
+    res.send('hello')
   })
   // sends index.html
   app.use('*', (req, res) => {

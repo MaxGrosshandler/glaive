@@ -36,9 +36,13 @@ class UserHome extends Component {
   }
   render() {
     let snake = window.location.host
+
     if (snake === 'localhost:8080') {
       snake = 'http://localhost:8080'
+    } else {
+      snake = 'https://' + window.location.host
     }
+    console.log(snake)
     return (
       <div>
         <h3>Welcome, {this.state.email}</h3>
