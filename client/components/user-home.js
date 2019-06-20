@@ -36,6 +36,11 @@ class UserHome extends Component {
         This is your Glaive Dashboard, where you can access your Glaive-related
         things
         <br />
+        {this.state.uploaded && (
+          <button onClick={this.changeImage} type="button">
+            Click to crop the image
+          </button>
+        )}
         <Files
           multiple={false}
           convertToBase64
@@ -43,9 +48,8 @@ class UserHome extends Component {
           onSuccess={files => this.setState({files, uploaded: true})}
           onError={errors => this.setState({errors})}
         >
-          {({browseFiles, getDropZoneProps, getLabelProps}) => (
+          {({browseFiles, getDropZoneProps}) => (
             <>
-              <label {...getLabelProps()}>Your files</label>
               <br />
               <div {...getDropZoneProps({className: 'myDropZone'})} />
               <button type="button" onClick={browseFiles}>
@@ -64,32 +68,24 @@ class UserHome extends Component {
             </>
           )}
         </Files>
-        Preview:
-        {this.state.uploaded ? (
+        {this.state.uploaded && (
           <div>
+            Preview:
+            <br />
             <img src={this.state.files[0].src.base64} />
+            <br />
+            Done:
+            {this.state.cropped && (
+              <div>
+                <Image
+                  src={this.state.files[0].src.base64}
+                  height={200}
+                  width={200}
+                />
+              </div>
+            )}
           </div>
-        ) : (
-          <div />
         )}
-        Done:
-        {this.state.cropped ? (
-          <div>
-            <Image
-              src={this.state.files[0].src.base64}
-              height={200}
-              width={200}
-            />
-          </div>
-        ) : (
-          <div />
-        )}
-        <button onClick={this.changeImage} type="button">
-          Click to crop the image
-        </button>
-        <button onClick={this.showState} type="button">
-          Click to show the state
-        </button>
       </div>
     )
   }

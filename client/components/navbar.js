@@ -8,13 +8,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
   <div>
     <h1>Glaive</h1>
     <nav>
-      <div>
-        {/* The navbar will show these links after you log in */}
-        <Link to="/home">Home</Link>
-        <a href="#" onClick={handleClick}>
-          Logout
-        </a>
-      </div>
+      <div>{/* The navbar will show these links after you log in */}</div>
     </nav>
     <hr />
   </div>
