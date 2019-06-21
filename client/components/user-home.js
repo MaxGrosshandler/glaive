@@ -81,6 +81,7 @@ class UserHome extends Component {
         This is your Glaive Dashboard, where you can generate banners and
         widget-sized images!
         <br />
+        <br />
         {this.state.uploaded && (
           <div>
             {!this.state.manipulated && (
