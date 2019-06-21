@@ -16,7 +16,7 @@ class UserHome extends Component {
       files: [],
       errors: [],
       uploaded: false,
-      cropped: false,
+      resized: false,
       addText: false,
       manipulated: false,
       imageSrc: 'non',
@@ -38,7 +38,7 @@ class UserHome extends Component {
 
   changeImage() {
     this.setState({
-      cropped: true,
+      resized: true,
       manipulated: true
     })
   }
@@ -59,13 +59,11 @@ class UserHome extends Component {
   }
 
   resetState() {
-    console.log(this.state)
-
     this.setState({
       files: [],
       errors: [],
       uploaded: false,
-      cropped: false,
+      resized: false,
       addText: false,
       manipulated: false,
       width: 120,
@@ -78,9 +76,8 @@ class UserHome extends Component {
     return (
       <div>
         <h3>Dashboard</h3>
-        This is your Glaive Dashboard, where you can generate banners and
-        widget-sized images!
-        <br />
+        This is your Glaive Dashboard, where you can resize images and add text
+        to them!
         <br />
         {this.state.uploaded && (
           <div>
@@ -192,7 +189,7 @@ class UserHome extends Component {
               ) : (
                 <div> </div>
               )}
-              {this.state.cropped && (
+              {this.state.resized && (
                 <div>
                   Your new image:
                   <br />

@@ -18,7 +18,7 @@ const initialState = {
   bottomX: '50%',
   bottomY: '90%',
   textStyle: {
-    fontFamily: 'Impact',
+    fontFamily: 'Helvetica',
     fontSize: '50px',
     fill: '#FFF',
     userSelect: 'none'
@@ -247,10 +247,14 @@ class MainPage extends React.Component {
               <FormGroup>
                 <Label for="fontChange">Change Font Family</Label>
                 <select onChange={this.changeFont}>
+                  <option value="Helvetica">Helvetica</option>
                   <option value="Impact">Impact</option>
                   <option value="Bank Gothic">Bank Gothic</option>
                   <option value="Arial">Arial</option>
-                  <option value="Helvetica">Helvetica</option>
+
+                  <option value="Serif Bold">Serif Bold</option>
+                  <option value="Comic Sans MS">Comic Sans</option>
+                  <option value="Monospace">Monospace</option>
                 </select>
                 <Label for="fontSize">Change Font Size</Label>
                 <input
