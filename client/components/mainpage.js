@@ -20,7 +20,6 @@ const initialState = {
   textStyle: {
     fontFamily: 'Impact',
     fontSize: '50px',
-    textTransform: 'uppercase',
     fill: '#FFF',
     stroke: '#000',
     userSelect: 'none'
@@ -61,6 +60,17 @@ class MainPage extends React.Component {
   changeText = event => {
     this.setState({
       [event.currentTarget.name]: event.currentTarget.value
+    })
+  }
+  changeFont = event => {
+    this.setState({
+      textStyle: {
+        fontFamily: event.currentTarget.value,
+        fontSize: '50px',
+        fill: '#FFF',
+        stroke: '#000',
+        userSelect: 'none'
+      }
     })
   }
 
@@ -216,6 +226,14 @@ class MainPage extends React.Component {
             </svg>
             <div className="meme-form">
               <FormGroup>
+                <Label for="fontChange">Change Font</Label>
+                <select onChange={this.changeFont}>
+                  <option value="Impact">Impact</option>
+                  <option value="Bank Gothic">Bank Gothic</option>
+                  <option value="Arial">Arial</option>
+                  <option value="Helvetica">Helvetica</option>
+                </select>
+
                 <Label for="toptext">Top Text</Label>
                 <input
                   className="form-control"
