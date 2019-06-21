@@ -1,8 +1,9 @@
 import React, {Component} from 'react'
-
+import TextField from '@material-ui/core/TextField'
 import ProcessImage from 'react-imgpro'
 import MainPage from './mainpage'
 import Files from 'react-butterfiles'
+
 import Button from '@material-ui/core/Button'
 import {save} from 'save-file'
 class UserHome extends Component {
@@ -18,7 +19,9 @@ class UserHome extends Component {
       cropped: false,
       addText: false,
       manipulated: false,
-      imageSrc: 'non'
+      imageSrc: 'non',
+      height: 100,
+      width: 100
     }
 
     this.showState = this.showState.bind(this)
@@ -26,10 +29,13 @@ class UserHome extends Component {
     this.addText = this.addText.bind(this)
     this.resetState = this.resetState.bind(this)
     this.downloadImage = this.downloadImage.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
   showState() {
     console.log(this.state.files[0].src)
   }
+
   changeImage() {
     this.setState({
       cropped: true,
@@ -45,6 +51,13 @@ class UserHome extends Component {
   async downloadImage() {
     await save(this.state.imageSrc, 'newPhoto.jpeg')
   }
+  handleSubmit(event) {
+    event.preventDefault()
+  }
+  handleChange(evt) {
+    this.setState({[evt.target.name]: Number(evt.target.value)})
+  }
+
   resetState() {
     console.log(this.state)
 
@@ -55,6 +68,8 @@ class UserHome extends Component {
       cropped: false,
       addText: false,
       manipulated: false,
+      width: 120,
+      height: 120,
       imageSrc: ''
     })
   }
@@ -69,16 +84,44 @@ class UserHome extends Component {
         {this.state.uploaded && (
           <div>
             {!this.state.manipulated && (
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={this.changeImage}
-              >
-                Click to generate images!
-              </Button>
+              <div>
+                <form onSubmit={this.handleSubmit}>
+                  <label>
+                    {/* <input
+                      type="number"
+                      name="width"
+                      value={this.state.width}
+                      onChange={this.handleChange}
+                    /> */}
+                    <TextField
+                      name="width"
+                      label="Height (in pixels):"
+                      value={this.state.width}
+                      onChange={this.handleChange}
+                      type="number"
+                    />
+                  </label>
+                  <label>
+                    <TextField
+                      name="height"
+                      label="Height (in pixels):"
+                      value={this.state.height}
+                      onChange={this.handleChange}
+                      type="number"
+                    />
+                  </label>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    type="button"
+                    onClick={this.changeImage}
+                  >
+                    Click to generate images!
+                  </Button>
+                </form>
+              </div>
             )}
 
-            <br />
             {!this.state.manipulated && (
               <Button
                 variant="contained"
@@ -150,11 +193,14 @@ class UserHome extends Component {
               )}
               {this.state.cropped && (
                 <div>
-                  Widget-sized:
+                  Your new image:
                   <br />
                   <ProcessImage
                     image={this.state.files[0].src.base64}
-                    resize={{width: 320, height: 120}}
+                    resize={{
+                      width: this.state.width,
+                      height: this.state.height
+                    }}
                     processedImage={(imageSrc, err) =>
                       this.setState({imageSrc})
                     }
