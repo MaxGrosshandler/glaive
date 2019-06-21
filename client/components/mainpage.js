@@ -165,7 +165,8 @@ class MainPage extends React.Component {
       <div>
         <Modal className="meme-gen-modal" isOpen={true}>
           <ModalHeader toggle={this.toggle}>
-            Apply some text directly to the image and then you can save it!
+            Apply some text directly to the image and drag the text as you see
+            fit before downloading the image.
           </ModalHeader>
           <ModalBody>
             <svg
@@ -236,7 +237,7 @@ class MainPage extends React.Component {
                 onClick={() => this.convertSvgToImage()}
                 className="btn btn-primary"
               >
-                Download Meme!
+                Download image
               </button>
             </div>
           </ModalBody>
