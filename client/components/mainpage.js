@@ -21,7 +21,6 @@ const initialState = {
     fontFamily: 'Impact',
     fontSize: '50px',
     fill: '#FFF',
-    stroke: '#000',
     userSelect: 'none'
   }
 }
@@ -67,8 +66,8 @@ class MainPage extends React.Component {
       textStyle: {
         fontFamily: event.currentTarget.value,
         fontSize: this.state.textStyle.fontSize,
-        fill: '#FFF',
-        stroke: this.state.textStyle.stroke,
+        fill: this.state.textStyle.fill,
+
         userSelect: 'none'
       }
     })
@@ -78,7 +77,17 @@ class MainPage extends React.Component {
       textStyle: {
         fontSize: event.currentTarget.value,
         fill: this.state.textStyle.fill,
-        stroke: this.state.textStyle.stroke,
+
+        userSelect: 'none'
+      }
+    })
+  }
+  changeColor = event => {
+    this.setState({
+      textStyle: {
+        fontSize: this.state.textStyle.fontSize,
+        fill: event.currentTarget.value,
+
         userSelect: 'none'
       }
     })
@@ -251,6 +260,13 @@ class MainPage extends React.Component {
                   id="fontSize"
                   onChange={this.changeSize}
                 />
+                <Label for="fontChange">Change Font Color</Label>
+                <select onChange={this.changeColor}>
+                  <option value="white">White</option>
+                  <option value="blue">Blue</option>
+                  <option value="red">Red</option>
+                  <option value="green">Green</option>
+                </select>
                 <Label for="toptext">Top Text</Label>
                 <input
                   className="form-control"
