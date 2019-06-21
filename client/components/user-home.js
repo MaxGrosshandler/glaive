@@ -4,7 +4,7 @@ import ProcessImage from 'react-imgpro'
 import MainPage from './mainpage'
 import Files from 'react-butterfiles'
 import Button from '@material-ui/core/Button'
-
+import {save} from 'save-file'
 class UserHome extends Component {
   constructor(props) {
     super(props)
@@ -17,13 +17,15 @@ class UserHome extends Component {
       uploaded: false,
       cropped: false,
       addText: false,
-      manipulated: false
+      manipulated: false,
+      imageSrc: 'non'
     }
 
     this.showState = this.showState.bind(this)
     this.changeImage = this.changeImage.bind(this)
     this.addText = this.addText.bind(this)
     this.resetState = this.resetState.bind(this)
+    this.downloadImage = this.downloadImage.bind(this)
   }
   showState() {
     console.log(this.state.files[0].src)
@@ -40,14 +42,20 @@ class UserHome extends Component {
       manipulated: true
     })
   }
+  async downloadImage() {
+    await save(this.state.imageSrc, 'newPhoto.jpeg')
+  }
   resetState() {
+    console.log(this.state)
+
     this.setState({
       files: [],
       errors: [],
       uploaded: false,
       cropped: false,
       addText: false,
-      manipulated: false
+      manipulated: false,
+      imageSrc: ''
     })
   }
 
@@ -89,6 +97,7 @@ class UserHome extends Component {
             >
               Choose a new file
             </Button>
+
             {this.state.addText && <MainPage photos={this.state.files} />}
           </div>
         )}
@@ -129,10 +138,16 @@ class UserHome extends Component {
         {this.state.uploaded &&
           !this.state.addText && (
             <div>
-              Preview:
-              <br />
-              <img src={this.state.files[0].src.base64} />
-              <br />
+              {!this.state.manipulated ? (
+                <div>
+                  Preview:
+                  <br />
+                  <img src={this.state.files[0].src.base64} />
+                  <br />
+                </div>
+              ) : (
+                <div> </div>
+              )}
               {this.state.cropped && (
                 <div>
                   Widget-sized:
@@ -140,14 +155,18 @@ class UserHome extends Component {
                   <ProcessImage
                     image={this.state.files[0].src.base64}
                     resize={{width: 320, height: 120}}
+                    processedImage={(imageSrc, err) =>
+                      this.setState({imageSrc})
+                    }
                   />
                   <br />
-                  Banner-sized:
-                  <br />
-                  <ProcessImage
-                    image={this.state.files[0].src.base64}
-                    resize={{width: 800, height: 500}}
-                  />
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={this.downloadImage}
+                  >
+                    Download image
+                  </Button>
                 </div>
               )}
             </div>
