@@ -66,9 +66,20 @@ class MainPage extends React.Component {
     this.setState({
       textStyle: {
         fontFamily: event.currentTarget.value,
-        fontSize: '50px',
+        fontSize: this.state.textStyle.fontSize,
         fill: '#FFF',
-        stroke: '#000',
+        stroke: this.state.textStyle.stroke,
+        userSelect: 'none'
+      }
+    })
+  }
+  changeSize = event => {
+    console.log(this.state)
+    this.setState({
+      textStyle: {
+        fontSize: event.currentTarget.value,
+        fill: this.state.textStyle.fill,
+        stroke: this.state.textStyle.stroke,
         userSelect: 'none'
       }
     })
@@ -226,14 +237,21 @@ class MainPage extends React.Component {
             </svg>
             <div className="meme-form">
               <FormGroup>
-                <Label for="fontChange">Change Font</Label>
+                <Label for="fontChange">Change Font Family</Label>
                 <select onChange={this.changeFont}>
                   <option value="Impact">Impact</option>
                   <option value="Bank Gothic">Bank Gothic</option>
                   <option value="Arial">Arial</option>
                   <option value="Helvetica">Helvetica</option>
                 </select>
-
+                <Label for="fontSize">Change Font Size</Label>
+                <input
+                  className="form-control"
+                  type="number"
+                  name="fontSize"
+                  id="fontSize"
+                  onChange={this.changeSize}
+                />
                 <Label for="toptext">Top Text</Label>
                 <input
                   className="form-control"
