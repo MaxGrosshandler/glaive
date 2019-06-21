@@ -151,7 +151,7 @@ class MainPage extends React.Component {
     const base_image = new Image()
     base_image.src = image.src.base64
     var wrh = base_image.width / base_image.height
-    var newWidth = 600
+    var newWidth = base_image.width
     var newHeight = newWidth / wrh
     const textStyle = {
       fontFamily: 'Impact',
