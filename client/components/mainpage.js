@@ -266,6 +266,10 @@ class MainPage extends React.Component {
                   <option value="blue">Blue</option>
                   <option value="red">Red</option>
                   <option value="green">Green</option>
+                  <option value="black">Black</option>
+                  <option value="yellow">Yellow</option>
+                  <option value="pink">Pink</option>
+                  <option value="purple">Purple</option>
                 </select>
                 <Label for="toptext">Top Text</Label>
                 <input
