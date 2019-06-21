@@ -74,7 +74,6 @@ class MainPage extends React.Component {
     })
   }
   changeSize = event => {
-    console.log(this.state)
     this.setState({
       textStyle: {
         fontSize: event.currentTarget.value,
