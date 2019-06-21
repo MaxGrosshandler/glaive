@@ -16,7 +16,15 @@ const initialState = {
   topY: '10%',
   topX: '50%',
   bottomX: '50%',
-  bottomY: '90%'
+  bottomY: '90%',
+  textStyle: {
+    fontFamily: 'Impact',
+    fontSize: '50px',
+    textTransform: 'uppercase',
+    fill: '#FFF',
+    stroke: '#000',
+    userSelect: 'none'
+  }
 }
 
 class MainPage extends React.Component {
@@ -153,14 +161,7 @@ class MainPage extends React.Component {
     var wrh = base_image.width / base_image.height
     var newWidth = base_image.width
     var newHeight = newWidth / wrh
-    const textStyle = {
-      fontFamily: 'Impact',
-      fontSize: '50px',
-      textTransform: 'uppercase',
-      fill: '#FFF',
-      stroke: '#000',
-      userSelect: 'none'
-    }
+
     return (
       <div>
         <Modal className="meme-gen-modal" isOpen={true}>
@@ -188,7 +189,10 @@ class MainPage extends React.Component {
                 width={newWidth}
               />
               <text
-                style={{...textStyle, zIndex: this.state.isTopDragging ? 4 : 1}}
+                style={{
+                  ...this.state.textStyle,
+                  zIndex: this.state.isTopDragging ? 4 : 1
+                }}
                 x={this.state.topX}
                 y={this.state.topY}
                 dominantBaseline="middle"
@@ -199,7 +203,7 @@ class MainPage extends React.Component {
                 {this.state.toptext}
               </text>
               <text
-                style={textStyle}
+                style={this.state.textStyle}
                 dominantBaseline="middle"
                 textAnchor="middle"
                 x={this.state.bottomX}
