@@ -93,7 +93,7 @@ class UserHome extends Component {
                     /> */}
                     <TextField
                       name="width"
-                      label="Height (in pixels):"
+                      label="Width (in pixels):"
                       value={this.state.width}
                       onChange={this.handleChange}
                       type="number"
