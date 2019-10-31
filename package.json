@@ -75,7 +75,7 @@
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
     "save-file": "^2.3.1",
-    "sequelize": "^5.8.10",
+    "sequelize": "^5.15.1",
     "socket.io": "^2.2.0",
     "style-loader": "^0.23.1",
     "url-loader": "^2.0.0"
